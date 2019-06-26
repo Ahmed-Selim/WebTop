@@ -1,0 +1,4 @@
+form[data-type="signin"] {
+    transform: scale(1.1, 1.1);
+    /* transition: ease 3s ; */
+}

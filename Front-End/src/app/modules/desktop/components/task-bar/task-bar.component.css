@@ -1,0 +1,48 @@
+.p-grid {
+    float: left ;
+    width: 50px;
+    height: calc(100% - 40px);
+    background: linear-gradient(to bottom, #4e54c8, #8f94fb) ;
+}
+
+.p-col-fixed {
+    width: 100%;
+    height: 45px;
+    /* padding: 4px 0; */
+    background: transparent ;
+}
+
+mat-icon {
+    font-size: 40px;
+    width: auto ;
+    padding: 3px 0;
+}
+
+.p-col-fixed:hover {
+    background: #575dc7 ;
+    color: white ;
+}
+
+div.p-col-fixed:hover::before {
+    content: "";
+    background: dodgerblue;
+    position: absolute;
+    /* left: 0; */
+    height: 45px;
+    width: 4px;
+    transition: all .3s ease-in-out ;
+}
+
+.hoverRight:hover::before {
+    right: 0 ;
+    left: auto ;
+}
+
+.hoverLeft:hover::before {
+    right: auto ;
+    left: 0 ;
+}
+
+.winTask {
+    cursor: default;
+}

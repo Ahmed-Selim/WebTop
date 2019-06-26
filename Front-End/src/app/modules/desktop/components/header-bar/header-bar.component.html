@@ -1,0 +1,34 @@
+<mat-toolbar class="nav d-flex flex-row justify-content-between bg-white" id="nav">
+  <div style="margin-top: -5px">
+    <a class="nav-link" routerLink="">{{ BrandName }}</a>
+  </div>
+  <div style="margin-top: -5px">
+    <span tooltipPosition="top" pTooltip="{{timeObj.clock}}
+      {{timeObj.date}}">
+      {{timeObj.day}} {{timeObj.clock}}
+    </span>
+  </div>
+  <div class="d-flex flex-row">
+    <button mat-button (click)="_settings.fullScreen()" tooltipPosition="top" pTooltip="Full Screen">
+      <mat-icon>fullscreen</mat-icon>
+    </button>
+    <div class="mx-2 mt-1" style="padding-top: 9px">
+      <mat-icon pTooltip="Notifications" tooltipPosition="top" matBadge="10" matBadgePosition="above after" matBadgeSize="medium">
+        notifications
+      </mat-icon>
+    </div>
+    <div class="mx-2 mt-1" style="padding-top: 9px">
+      <mat-icon pTooltip="Messages" tooltipPosition="top" matBadge="5" matBadgePosition="above after" matBadgeSize="medium">
+        chat
+      </mat-icon>
+    </div>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>person_outline</mat-icon> {{ (this.Auth.user|async)?.displayName}} <mat-icon>expand_more</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item><mat-icon>home</mat-icon>My Account</button>
+      <button mat-menu-item><mat-icon>settings</mat-icon> My Settings</button>
+      <button mat-menu-item (click)="logout()"><mat-icon>power_settings_new</mat-icon> Sign Out</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

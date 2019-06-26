@@ -1,0 +1,10 @@
+
+#media {
+    width: 100%;
+}
+
+.playlist {
+    overflow-y: scroll ;
+    height: 427px ;
+}
+

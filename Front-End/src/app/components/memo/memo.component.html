@@ -1,0 +1,28 @@
+
+<div class="container-fluid p-2">
+  Title : <input matInput type="text" [(ngModel)]="title" (input)="checkTitle()">
+  <p-message severity="warn" [text]="warningMessage" *ngIf="warningMessage" class="p-2"></p-message>  
+</div>
+
+<p-editor [(ngModel)]="text" styleClass="h-75"></p-editor>
+
+<div class="container-fluid">
+  <div class="row justify-content-around mt-5 pt-1">
+    <button mat-raised-button class="col ml-3 p-1 bg-danger" 
+    (click)="clear()">
+        <fa-icon [icon]="['fas','eraser']"></fa-icon> Clear</button>
+    <button mat-raised-button class="col mx-3" (click)="save()" [disabled]="!title" color="primary">
+      <fa-icon [icon]="['fas','save']"></fa-icon> Save</button>
+    <button mat-raised-button class="col mr-3" (click)="upload()">
+        <fa-icon [icon]="['fas','cloud-upload-alt']"></fa-icon> upload</button>
+  </div>
+  <ul 
+    class="row pt-1 list-group list-unstyled border-top mt-2"
+    style="overflow-y: scroll; height: 60px;"
+  >
+    <li *ngFor="let memo of (memos| keyvalue)" class="d-flex justify-content-around">
+      {{ memo.key }}
+      <button mat-raised-button (click)="open(memo.key)"> Open  </button>
+    </li>
+  </ul>
+</div>

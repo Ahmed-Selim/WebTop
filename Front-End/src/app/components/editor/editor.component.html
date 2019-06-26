@@ -1,0 +1,69 @@
+<!-- <p-terminal welcomeMessage="Welcome to PrimeNG" prompt="primeng $"></p-terminal> -->
+<!-- <ace-editor
+        #editor style="height:150px;">
+</ace-editor> -->
+
+<!-- <div class="code-editor" #editor></div> -->
+
+
+
+<div class="container h-100 pt-2">
+  
+  <!-- languages & theme -->
+  <div class="row mb-4">
+      <!-- languages select -->
+      <div class="col-6 d-flex justify-content-center">
+            <div class="">
+                <label class="input-group-text" for="languages-select">Languages</label>
+            </div>
+            <select class="languages-select" id="languages-select" #languagesSelect>
+                <option value="1">HTML</option>
+                <option value="2">JavaScript</option>
+            </select>
+      </div>
+      <!-- theme radio buttons -->
+      <div class="col-6 d-flex justify-content-center">
+          <div>
+                <label class="input-group-text" for="languages-select">Themes</label>
+          </div>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked> GitHub
+                </label>
+                <!-- <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                </label> -->
+              </div>
+      </div>
+  </div>
+  
+  <!-- the code editor -->
+  <div class="row mb-4">
+      <div class="col">
+          <div class="code-editor" #editor></div>
+      </div>
+  </div>
+
+  <!-- run, clear & beautify buttons -->
+  <div class="row justify-content-center">
+        <button type="button" class="btn btn-dark px-4 mx-2" (click)="getCode()">
+            Run
+        </button>
+        <button type="button" class="btn btn-primary px-4 mx-2" (click)="getCode()">
+            Clear
+        </button>
+        <button type="button" class="btn btn-beautify px-4 mx-2" (click)="beautifyContent()">
+            Beautify
+        </button>
+  </div>
+
+  <!-- output box -->
+  <div class="row mt-4">
+      <div class="col">
+          <div class="label-box border"><span class="mx-4 font-weight-light">Output</span></div>
+          <textarea class="form-control output" rows="6" disabled="true" aria-label="output-textarea"></textarea>
+      </div>
+  </div>

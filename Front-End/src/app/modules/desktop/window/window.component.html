@@ -1,0 +1,41 @@
+<div id="Handler" class="bg-primary d-flex" style="height: 30px" cdkDragHandle>
+  <div class="d-inline-block flex-grow-1 h5 p-1 text-white">{{ win.title }}</div>
+  <button mat-button class="btn btn-success py-0" (click)="toggleHide()">
+    <mat-icon>remove</mat-icon>
+  </button>
+  <button mat-button class="btn btn-warning py-0" [hidden]="!win.allowResize" (click)="resize()">
+    <mat-icon>fullscreen</mat-icon>
+  </button>
+  <button mat-button class="btn btn-danger py-0" [hidden]="!win.allowClose" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="bg-white px-0" 
+     [ngClass]="{'container': !win.isMax}"
+     [ngStyle]="{
+      'width': '100%',
+      'height': 'calc(100% - 30px)', 
+      'top': posY, 
+      'left': posX, 
+      'z-index': posZ
+     }">
+      <ng-container [ngSwitch]="win.component">
+      <!-- {{ win | json }} -->
+        <app-quote *ngSwitchCase="'quote'"></app-quote>
+        <app-memo *ngSwitchCase="'memo'"></app-memo>
+        <app-calculator *ngSwitchCase="'calc'"></app-calculator>
+        <app-weather *ngSwitchCase="'weather'"></app-weather>
+        <app-clock *ngSwitchCase="'clock'"></app-clock>
+        <app-settings *ngSwitchCase="'settings'"></app-settings>
+        <!-- <app-dictionary *ngSwitchCase="'dictionary'"></app-dictionary> -->
+        <app-editor *ngSwitchCase="'editor'"></app-editor>
+        <app-music *ngSwitchCase="'music'"></app-music>
+        <app-movies *ngSwitchCase="'movies'"></app-movies>
+        <app-todo *ngSwitchCase="'todo'"></app-todo>
+        <app-web-hub *ngSwitchCase="'webhub'"></app-web-hub>
+        <!-- <app-help *ngSwitchCase="'help'"></app-help> -->
+        <!-- <p *ngSwitchDefault>
+        
+        </p> -->
+      </ng-container>
+</div>

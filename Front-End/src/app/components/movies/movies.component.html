@@ -1,0 +1,28 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="form-group">
+    </div>
+  </div>
+  <div class="row">
+    <video controls #media id="media" autoplay style="width: 100%"></video>
+  </div>
+  <div class="row justify-content-around">
+    <label class="btn border-secondary my-2">
+      Add<input type="file" style="display: none;" id="movie" (change)="add($event.target.files)" multiple accept="video/mp4">
+    </label>
+    <label class="btn border-secondary my-2" (click)="(this.media.paused) ? resume() : pause()">{{ (this.media.paused) ? 'resume' : 'pause' }}</label>
+    <label class="btn border-secondary my-2" (click)="shuffle()">Shuffle</label>
+    <label class="btn border-secondary my-2" (click)="next()">Next</label>
+    <label class="btn border-secondary my-2" (click)="prev()">Prev</label>
+  </div>
+  <div class="row" *ngIf="movies[nowPlaying]">
+    Now Playing&hellip;{{ movies[nowPlaying].name }}
+  </div>
+  <div class="row">
+    <ul cdkDropList class="col list-group playlist" (cdkDropListDropped)="drop($event)">
+      <li class="list-group-item" *ngFor="let movie of movies; let i = index" cdkDrag>{{i+1}}-{{movie.name}}
+        <button mat-raised-button (click)="play(i)">Play</button>
+      </li>
+    </ul>
+  </div>
+</div>

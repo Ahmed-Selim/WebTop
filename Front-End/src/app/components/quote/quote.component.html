@@ -1,0 +1,246 @@
+
+<mat-sidenav-container (backdropClick)="sidenav.close()" class="h-100">
+  <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose mode="side" class="d-flex flex-row">
+    <!-- mode="push" -->
+    <mat-action-list>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 0">
+        <mat-icon matListIcon>format_quote</mat-icon>
+        <h3 matLine> Quote of the day </h3>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 1">
+        <mat-icon matListIcon>view_list</mat-icon>
+        <h3 matLine> Quotes </h3>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 2">
+        <mat-icon matListIcon>favorite</mat-icon>
+        <h3 matLine> My Favorites </h3>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 3">
+        <mat-icon matListIcon>thumb_up</mat-icon>
+        <h3 matLine> My Likes </h3>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 4">
+        <mat-icon matListIcon>search</mat-icon>
+        <h3 matLine> Search Quotes </h3>
+      </mat-list-item>
+    </mat-action-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="p-1">
+    <nav class="navbar sticky-top navbar-light bg-light">
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="ml-auto">
+        <fa-icon [icon]="[Tabs[tab].icon[0],Tabs[tab].icon[1]]" style="font-size: x-large; padding: 5px;" class="border border-info rounded"></fa-icon>
+        <h2 class="d-inline-block px-2"> {{Tabs[tab].title}} </h2>
+      </div>
+    </nav>
+    <mat-divider class="py-1"></mat-divider>
+        <main class ="container" [ngSwitch]="tab" class="h-auto">
+          <mat-card *ngSwitchCase="0">   <!-- // Quote Of The Day -->
+            <mat-card-content>
+              <blockquote class="blockquote text-center">
+                <p class="">{{ this.qotd.body }}</p>
+                <footer class="blockquote-footer" attr.data-link="https://favqs.com/authors/{{this.qotd.authorPermalink}}">
+                  {{ this.qotd.author }}
+                  <cite title="Source Title"></cite>
+                </footer>
+              </blockquote>
+              <p> Tags :
+                <ng-container *ngFor="let tag of this.qotd.tags; last as isLast">
+                  <span>
+                    <fa-icon [icon]="['fas', 'tag']"></fa-icon>
+                    {{ tag }}<span *ngIf="!isLast"> , </span>
+                  </span>
+                </ng-container>
+              </p>
+            </mat-card-content>
+            <mat-card-actions class="text-center">
+              <button mat-button tooltipPosition="top" pTooltip="Favorite" (click)="_quote.fav(qotd.id)">
+                <fa-icon [icon]="['far','heart']" size="lg"></fa-icon>
+                {{ this.qotd.favoritesCount }}
+              </button>
+              <button mat-button tooltipPosition="top" pTooltip="Like" (click)="_quote.like(qotd.id)">
+                <fa-icon [icon]="['far','thumbs-up']" size="lg"></fa-icon>
+                {{ this.qotd.upvotesCount }}
+              </button>
+              <button mat-button tooltipPosition="top" pTooltip="DisLike">
+                <fa-icon [icon]="['far','thumbs-down']" size="lg"></fa-icon>
+                {{ this.qotd.downvotesCount }}
+              </button>
+            </mat-card-actions>
+            
+          </mat-card>
+          <div class="col" *ngSwitchCase="1">   <!-- // Quotes -->
+            <mat-card matRipple *ngFor="let quote of Quotes$|async" class="my-2">
+                <mat-card-content>
+                  <blockquote class="blockquote text-center">
+                    <p class="">{{ quote.body }}</p>
+                    <footer class="blockquote-footer" attr.data-link="https://favqs.com/authors/{{quote.authorPermalink}}">
+                      {{ quote.author }}
+                      <cite title="Source Title"></cite>
+                    </footer>
+                  </blockquote>
+                  <p> Tags :
+                    <ng-container *ngFor="let quoteTag of quote.tags; last as isLast">
+                      <span>
+                        <fa-icon [icon]="['fas', 'tag']"></fa-icon>
+                        {{ quoteTag.tag }}<span *ngIf="!isLast"> , </span>
+                      </span>
+                    </ng-container>
+                  </p>
+                </mat-card-content>
+                <mat-card-actions class="text-center">
+                  <button mat-button tooltipPosition="top" pTooltip="Favorite" (click)="_quote.fav(quote.id)">
+                    <fa-icon [icon]="['far','heart']" size="lg"></fa-icon>
+                    {{ quote.favorites_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="Like" (click)="_quote.like(quote.id)">
+                    <fa-icon [icon]="['far','thumbs-up']" size="lg"></fa-icon>
+                    {{ quote.upvotes_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="DisLike">
+                    <fa-icon [icon]="['far','thumbs-down']" size="lg"></fa-icon>
+                    {{ quote.downvotes_count }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+              <mat-card matRipple *ngIf="emptyQuote" class="text-center text-uppercase">
+                  <mat-card-content>
+                    No Quotes
+                  </mat-card-content>
+                </mat-card>
+            </div>
+          <div class="col" *ngSwitchCase="2">   <!-- // My Favorites -->
+            <mat-card matRipple *ngFor="let quote of fav$|async" class="my-2">
+                <mat-card-content>
+                  <blockquote class="blockquote text-center">
+                    <p class="">{{ quote.body }}</p>
+                    <footer class="blockquote-footer" attr.data-link="https://favqs.com/authors/{{quote.authorPermalink}}">
+                      {{ quote.author }}
+                      <cite title="Source Title"></cite>
+                    </footer>
+                  </blockquote>
+                  <p> Tags :
+                    <ng-container *ngFor="let quoteTag of quote.tags; last as isLast">
+                      <span>
+                        <fa-icon [icon]="['fas', 'tag']"></fa-icon>
+                        {{ quoteTag.tag }}<span *ngIf="!isLast"> , </span>
+                      </span>
+                    </ng-container>
+                  </p>
+                </mat-card-content>
+                <mat-card-actions class="text-center">
+                  <button mat-button tooltipPosition="top" pTooltip="Favorite" (click)="_quote.fav(quote.id)">
+                    <fa-icon [icon]="['fas','heart']" size="lg"></fa-icon>
+                    {{ quote.favorites_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="Like" (click)="_quote.like(quote.id)">
+                    <fa-icon [icon]="['far','thumbs-up']" size="lg"></fa-icon>
+                    {{ quote.upvotes_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="DisLike">
+                    <fa-icon [icon]="['far','thumbs-down']" size="lg"></fa-icon>
+                    {{ quote.downvotes_count }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+              <mat-card matRipple *ngIf="emptyFav" class="text-center text-uppercase">
+                  <mat-card-content>
+                    No Favorite Quotes
+                  </mat-card-content>
+                </mat-card>
+            </div>
+          <div class="col" *ngSwitchCase="3">   <!-- // My Likes -->
+            <mat-card matRipple *ngFor="let quote of like$|async" class="my-2">
+                <mat-card-content>
+                  <blockquote class="blockquote text-center">
+                    <p class="">{{ quote.body }}</p>
+                    <footer class="blockquote-footer" attr.data-link="https://favqs.com/authors/{{quote.authorPermalink}}">
+                      {{ quote.author }}
+                      <cite title="Source Title"></cite>
+                    </footer>
+                  </blockquote>
+                  <p> Tags :
+                    <ng-container *ngFor="let quoteTag of quote.tags; last as isLast">
+                      <span>
+                        <fa-icon [icon]="['fas', 'tag']"></fa-icon>
+                        {{ quoteTag.tag }}<span *ngIf="!isLast"> , </span>
+                      </span>
+                    </ng-container>
+                  </p>
+                </mat-card-content>
+                <mat-card-actions class="text-center">
+                  <button mat-button tooltipPosition="top" pTooltip="Favorite" (click)="_quote.fav(quote.id)">
+                    <fa-icon [icon]="['far','heart']" size="lg"></fa-icon>
+                    {{ quote.favorites_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="Like" (click)="_quote.like(quote.id)">
+                    <fa-icon [icon]="['fas','thumbs-up']" size="lg"></fa-icon>
+                    {{ quote.upvotes_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="DisLike">
+                    <fa-icon [icon]="['far','thumbs-down']" size="lg"></fa-icon>
+                    {{ quote.downvotes_count }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+              <mat-card matRipple *ngIf="emptyLike" class="text-center text-uppercase">
+                <mat-card-content>
+                  No Liked Quotes
+                </mat-card-content>
+              </mat-card>
+            </div>
+          <div class="col" *ngSwitchCase="4">   <!-- // Search Quotes -->
+            <form class="row justify-content-around" [formGroup]="search">
+              <mat-select class="col-2 border border-secondary" formControlName="category">
+                <mat-option value="author">Author</mat-option>
+                <mat-option value="body">Body</mat-option>
+                <mat-option value="tag">Tag</mat-option>
+              </mat-select>
+              <input matInput class="col-7" placeholder="Search By ..." formControlName="query">
+              <button mat-raised-button [disabled]="search.invalid" (click)="find()"><fa-icon [icon]="['fas','search']"></fa-icon> Search</button>
+            </form>
+            <mat-card matRipple *ngFor="let quote of search$|async" class="my-2">
+                <mat-card-content>
+                  <blockquote class="blockquote text-center">
+                    <p class="">{{ quote.body }}</p>
+                    <footer class="blockquote-footer" attr.data-link="https://favqs.com/authors/{{quote.authorPermalink}}">
+                      {{ quote.author }}
+                      <cite title="Source Title"></cite>
+                    </footer>
+                  </blockquote>
+                  <p> Tags :
+                    <ng-container *ngFor="let quoteTag of quote.tags; last as isLast">
+                      <span>
+                        <fa-icon [icon]="['fas', 'tag']"></fa-icon>
+                        {{ quoteTag.tag }}<span *ngIf="!isLast"> , </span>
+                      </span>
+                    </ng-container>
+                  </p>
+                </mat-card-content>
+                <mat-card-actions class="text-center">
+                  <button mat-button tooltipPosition="top" pTooltip="Favorite" (click)="_quote.fav(quote.id)">
+                    <fa-icon [icon]="['far','heart']" size="lg"></fa-icon>
+                    {{ quote.favorites_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="Like" (click)="_quote.like(quote.id)">
+                    <fa-icon [icon]="['far','thumbs-up']" size="lg"></fa-icon>
+                    {{ quote.upvotes_count }}
+                  </button>
+                  <button mat-button tooltipPosition="top" pTooltip="DisLike">
+                    <fa-icon [icon]="['far','thumbs-down']" size="lg"></fa-icon>
+                    {{ quote.downvotes_count }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+              <mat-card matRipple *ngIf="emptySearch" class="text-center text-uppercase">
+                <mat-card-content>
+                  No Quotes Found
+                </mat-card-content>
+              </mat-card>
+            </div>
+        </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

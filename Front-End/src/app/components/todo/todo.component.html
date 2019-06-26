@@ -1,0 +1,20 @@
+<div class="container-fluid px-0">
+  <div class="col">
+    <div class="row p-2 justify-content-between">
+      <input matInput class="border w-75" placeholder="Add Item..." value="" [(ngModel)]="newItem">
+      <button mat-raised-button class="ml-1 px-5" (click)="add(newItem)">Add</button>
+   </div>
+   <ul class="row list-group" cdkDropList (cdkDropListDropped)="drop($event)">
+      <li class="border list-group-item d-flex justify-content-around align-items-center" 
+          *ngFor="let item of items; let i = index" cdkDrag >
+        <mat-checkbox class="flex-grow-1 align-self-end" [(ngModel)]="item.isChecked" (click)="mark(i)">
+          {{item.title}}
+        </mat-checkbox>
+        <div class="d-flex">
+          <button mat-stroked-button class="mr-4" style="cursor:initial" (click)="remove(i)">X</button>
+          <button mat-stroked-button style="cursor:move" cdkDragHandle>|||</button>
+        </div>
+      </li>
+    </ul>  
+  </div>
+</div>

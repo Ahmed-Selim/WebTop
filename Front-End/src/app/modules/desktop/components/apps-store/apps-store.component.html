@@ -1,0 +1,26 @@
+<section
+  id="Store"
+  [ngClass]="{'d-inline-flex align-content-start flex-wrap': show,
+              'd-none': !show}"
+  [className]="direction()"
+  [style.right]="!ltr() ? '48px' : 'auto'" [style.left]="!ltr() ? 'auto' : '50px'"
+  [style.background]="background()"
+  >
+    <div [ngClass]="{
+    'api
+    py-2
+    m-2
+    shadow
+    border
+    border-primary
+    rounded
+    text-center' : true
+    }"
+    *ngFor="let app of Apps;let i = index" (click)="toggle(false)" (click)="create(i)"
+    [style.color]="color()"
+    [class]="size()"
+    >
+      <mat-icon>{{ app.icon }}</mat-icon>
+      <div>{{app.appName}}</div>
+    </div>
+</section>

@@ -1,0 +1,165 @@
+
+<p-toast position="bottom-right"></p-toast>
+
+<div class="w-100 h-100" style="padding-top: 55px; background: linear-gradient(to right, #1488cc, #2b32b2)">
+  <div class="container w-75 h-100 d-flex flex-row align-items-center mx-auto">
+    <form [formGroup]="signIn" [class]="(Login_form) ? 'd-flex flex-column bg-white w-100 p-5' : 'd-none'"
+      (click)="submit(signIn)">
+      <legend class="mb-4 h2"> Sign In </legend>
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" [formControl]="loginEmail">
+        <mat-hint>ex: name@example.com</mat-hint>
+        <mat-error *ngIf="loginEmail.hasError('email') && !loginEmail.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="loginEmail.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [formControl]="loginPassword" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-hint>Password must be at least 6 characters long</mat-hint>
+        <mat-error *ngIf="loginPassword.hasError('minlength') && !loginPassword.hasError('required')">
+          Password must be at least 6 characters long (> {{ loginPassword.getError('minlength').actualLength }})
+        </mat-error>
+        <mat-error *ngIf="loginPassword.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-checkbox color="primary" [formControl]="loginRemember">Remember Me ?</mat-checkbox>
+      <div class="row my-1">
+        <button mat-raised-button color="primary" class="col rounded-pill p-2"
+          (click)="emailLogin()" 
+          [disabled]="signIn.invalid">Sign In</button>
+        <button mat-raised-button class="col-4 rounded-pill" (click)="Login_form = false">Sign Up</button>
+      </div>
+      <button mat-button class="text-muted my-2">Forgot Your Password?</button>
+      <div class="row my-2">
+        <mat-divider class="col-5 mt-2 text-black-50"></mat-divider>
+        <small class="text-muted col-2 h6 text-center"> OR </small>
+        <mat-divider class="col-5 mt-2 text-black-50"></mat-divider>
+      </div>
+      <div class="row justify-content-around">
+        <button mat-raised-button (click)="googleLogin()">
+          <fa-icon [icon]="['fab', 'google']" size="lg"></fa-icon> Google
+        </button>
+        <button mat-raised-button color="primary" (click)="facebookLogin()">
+          <fa-icon [icon]="['fab', 'facebook-square']" size="lg"></fa-icon> Facebook
+        </button>
+        <button mat-raised-button style="color:white;background-color:#1DA1F2" (click)="twitterLogin()">
+          <fa-icon [icon]="['fab', 'twitter-square']" size="lg"></fa-icon> Twitter
+        </button>
+        <button mat-raised-button style="color:black" (click)="githubLogin()">
+          <fa-icon [icon]="['fab', 'github-square']" size="lg"></fa-icon> GitHub
+        </button>
+      </div>
+    </form>
+    <form [formGroup]="signUp" [class]="(Login_form) ? 'd-none' : 'd-flex flex-column bg-white w-100 p-5'"
+      (click)="submit(signUp)">
+      <legend class="mb-4 h2"> Sign Up </legend>
+      <div class="row">
+          <mat-form-field class="form-group col-6" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" value="" [formControl]="firstname">
+          </mat-form-field>
+          <mat-form-field class="form-group col-6" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" value="" [formControl]="lastname">
+          </mat-form-field>
+        </div>
+      <div class="row">
+        <mat-form-field class="form-group col-6" appearance="outline">
+          <mat-label>User Name</mat-label>
+          <input type="text" matInput [formControl]="username">
+        </mat-form-field>
+        <div class="form-group col-6 input-group custom-file">
+          <input type="file" accept="image/*" [formControl]="profilePicture" 
+            class="custom-file-input" placeholder="Profile Picture" (change)="upload($event.target.files[0])">
+            <label class="custom-file-label">Profile Picture</label>
+        </div>
+      </div>
+      <div class="row">
+        <mat-form-field class="form-group col-4" appearance="outline">
+          <mat-label>Country</mat-label>
+          <mat-select [formControl]="country" (selectionChange)="userStateList()">
+            <mat-option value="" disabled hidden>Select your Country</mat-option>
+            <mat-option *ngFor="let c of countries" [value]="c">{{c.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-4" appearance="outline">
+          <mat-label>State</mat-label>
+          <mat-select [formControl]="state" (selectionChange)="userCityList()">
+            <mat-option value="" disabled hidden>Select your State</mat-option>
+            <mat-option *ngFor="let a of states" [value]="a">{{a.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-4" appearance="outline">
+          <mat-label>City</mat-label>
+          <mat-select [formControl]="city">
+          <mat-option value="" disabled hidden>Select your City</mat-option>
+          <mat-option *ngFor="let b of cities" [value]="b">{{b.name}}</mat-option>
+        </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="form-group col-6" appearance="outline">
+          <mat-label>BirthDay</mat-label>
+          <input matInput [max]="validDate" [matDatepicker]="picker" placeholder="BirthDay" [formControl]="birthday">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-hint>Must be at least <strong>16</strong> years old. Date Format: dd/mm/yyyy</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="form-group col-6" appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select [formControl]="gender">
+            <mat-option value="" disabled hidden>Select your gender</mat-option>
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" [formControl]="email">
+      </mat-form-field>
+      <div class="row">
+        <mat-form-field class="form-group col-6" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [formControl]="password">
+        </mat-form-field>
+        <mat-form-field class="form-group col-6" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" [formControl]="confirmPassword">
+        </mat-form-field>
+      </div>
+      <div class="row my-1">
+        <button mat-raised-button color="primary" class="col rounded-pill p-2"
+          (click)="emailSignUp()" [disabled]="signUp.invalid">Sign Up</button>
+        <button mat-raised-button class="col-4 rounded-pill" (click)="Login_form = true">Sign In</button>
+      </div>
+      <div class="row my-3">
+        <mat-divider class="col-5 mt-2 text-black-50"></mat-divider>
+        <small class="text-muted col-2 h6 text-center"> OR </small>
+        <mat-divider class="col-5 mt-2 text-black-50"></mat-divider>
+      </div>
+      <div class="row justify-content-around">
+        <button mat-raised-button (click)="googleLogin()">
+          <fa-icon [icon]="['fab', 'google']" size="lg"></fa-icon> Google
+        </button>
+        <button mat-raised-button color="primary" (click)="facebookLogin()">
+          <fa-icon [icon]="['fab', 'facebook-square']" size="lg"></fa-icon> Facebook
+        </button>
+        <button mat-raised-button style="color:white;background-color:#1DA1F2" (click)="twitterLogin()">
+          <fa-icon [icon]="['fab', 'twitter-square']" size="lg"></fa-icon> Twitter
+        </button>
+        <button mat-raised-button style="color:black" (click)="githubLogin()">
+          <fa-icon [icon]="['fab', 'github-square']" size="lg"></fa-icon> GitHub
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -1,0 +1,123 @@
+<div class="container-fluid text-dark pt-1">
+  <div class="row px-2">
+    <div class="col">
+      <h3>{{weather.title}}, {{weather.parent.title}}</h3>
+      <h6 class="text-muted">{{weather.consolidatedWeather[0].weather_state_name}}</h6>
+    </div>
+    <div class="col">
+      <img
+        src="https://www.metaweather.com/static/img/weather/{{weather.consolidatedWeather[0].weather_state_abbr}}.svg"
+        alt="" style="height: 4em">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4>Temperature: {{weather.consolidatedWeather[0].the_temp | number:'1.0-0'}}<sup>°c</sup></h4>
+      <h4 class="">
+        <fa-icon [icon]="['fas', 'temperature-low']" size="1x"></fa-icon>:
+        {{weather.consolidatedWeather[0].min_temp | number:'1.0-0'}}<sup>°c</sup>
+        &nbsp;&nbsp;
+        <fa-icon [icon]="['fas', 'temperature-high']" size="1x"></fa-icon>:
+        {{weather.consolidatedWeather[0].max_temp | number:'1.0-0'}}<sup>°c</sup>
+      </h4>
+    </div>
+    <div class="col">
+      <h2>{{weather.timezone}}</h2>
+      <h4>{{weather.consolidatedWeather[0].applicable_date}}</h4>
+    </div>
+  </div>
+  <div class="row mx-0">
+    <div class="col bg-primary">
+      <div class="row mt-3">
+        <div class="col-2">
+          <fa-icon [icon]="['fas', 'weight']" size="3x"></fa-icon>
+        </div>
+        <div class="col align-self-center">
+          <h6>Air Pressure: <strong>{{weather.consolidatedWeather[0].air_pressure | number: '1.0-0'}}
+              mbar</strong>
+          </h6>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-2">
+          <fa-icon [icon]="['fas', 'tint']" size="3x"></fa-icon>
+        </div>
+        <div class="col align-self-center">
+          <h6>Humidity: <strong>{{weather.consolidatedWeather[0].humidity}} %</strong>
+          </h6>
+        </div>
+      </div>
+      <div class="row" title="Wind">
+        <div class="col-2">
+          <fa-icon [icon]="['fas', 'wind']" size="3x"></fa-icon>
+        </div>
+        <div class="col align-self-center">
+          <h6>
+            <strong>Direction:</strong>
+            {{weather.consolidatedWeather[0].wind_direction | number:'1.0-0'}}<sup>°</sup>
+            {{weather.consolidatedWeather[0].wind_direction_compass}} <br>
+            <strong>Speed: </strong>{{weather.consolidatedWeather[0].wind_speed | number:'1.0-0'}} mph
+          </h6>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-2">
+          <fa-icon [icon]="['far', 'eye']" size="3x"></fa-icon>
+        </div>
+        <div class="col align-self-center">
+          <h6>
+            <strong>Visibility:</strong> {{weather.consolidatedWeather[0].visibility | number:'1.0-0'}} miles
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="col mt-1">
+      <div class="row mt-1">
+        <div class="col">
+          <h6>
+            Monday
+          </h6>
+        </div>
+        <div class="col">
+          <h6>15°c</h6>
+          <h6>Cloudy</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h6>
+            Tuesday
+          </h6>
+        </div>
+        <div class="col">
+          <h6>16°c</h6>
+          <h6>Clear</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h6>
+            Wednesday
+          </h6>
+        </div>
+        <div class="col">
+          <h6>18°c</h6>
+          <h6>Clear</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h6>
+            Thursday
+          </h6>
+        </div>
+        <div class="col">
+          <h6>12°c</h6>
+          <h6>Partly Cloudy</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

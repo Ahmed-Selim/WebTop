@@ -1,0 +1,8 @@
+mat-toolbar div {
+    text-align: center;
+    font-weight: bold;
+}
+
+#nav {
+    height: 40px ;
+}

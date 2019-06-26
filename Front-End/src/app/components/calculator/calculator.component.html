@@ -1,0 +1,115 @@
+<form class="container-fluid" [formGroup]="calculator">
+    <div class="form-group pt-3 d-flex justify-content-center">
+      <input matInput class="p-1 w-75" formControlName="math">
+    </div>
+    <div class="form-row text-center py-1">
+      <button mat-raised-button type="button" (click)="key('OFF')" class="col w-100">
+        <fa-icon [icon]="['fas', 'power-off']"></fa-icon>
+      </button>
+      <button mat-raised-button type="button" (click)="key('C')" class="col w-100 mx-2" [disabled]="off">
+        <fa-icon [icon]="['fas', 'eraser']"></fa-icon>
+      </button>
+      <button mat-raised-button type="button" (click)="key('AC')" class="col w-100" [disabled]="off">
+        <fa-icon [icon]="['fas', 'long-arrow-alt-left']"></fa-icon>
+      </button>
+      <button mat-raised-button type="button" (click)="key('**2')" class="col w-100 mx-2" [disabled]="off">
+        <fa-icon [icon]="['fas', 'superscript']"></fa-icon>
+      </button>
+      <button mat-raised-button type="button" (click)="key('sqrt')" class="col w-100" [disabled]="off">
+        <fa-icon [icon]="['fas', 'square-root-alt']"></fa-icon>
+      </button>
+    </div>
+    <div class="form-row text-center py-1">
+      <button mat-raised-button type="button" (click)="key('7')" class="col w-100" [disabled]="off">
+        <div class="h5">7</div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('8')" class="col w-100 mx-2" [disabled]="off">
+        <div class="h5">
+          8
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('9')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          9
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('(')" class="col w-100 mx-2" [disabled]="off">
+        <div class="h5">
+          (
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key(')')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          )
+        </div>
+      </button>
+    </div>
+    <div class="form-row text-center py-1">
+      <button mat-raised-button type="button" (click)="key('4')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          4
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('5')" class="col w-100 mx-2" [disabled]="off">
+        <div class="h5">
+          5
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('6')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          6
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('-')" class="col w-100 mx-2" [disabled]="off">
+        <fa-icon [icon]="['fas', 'minus']"></fa-icon>
+      </button>
+      <button mat-raised-button type="button" (click)="key('+')" class="col w-100" [disabled]="off">
+        <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+      </button>
+    </div>
+    <div class="form-row text-center py-1">
+      <button mat-raised-button type="button" (click)="key('1')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          1
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('2')" class="col w-100 mx-2" [disabled]="off">
+        <div class="h5">
+          2
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('3')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          3
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('*')" class="col w-100 mx-2" [disabled]="off">
+        <fa-icon [icon]="['fas', 'times']"></fa-icon>
+      </button>
+      <button mat-raised-button type="button" (click)="key('/')" class="col w-100" [disabled]="off">
+        <fa-icon [icon]="['fas', 'divide']"></fa-icon>
+      </button>
+    </div>
+    <div class="form-row text-center py-1">
+      <button mat-raised-button type="button" (click)="key('.')" class="col w-100 mr-2" [disabled]="off">
+        <div class="h5">
+          .
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('0')" class="col w-100" [disabled]="off">
+        <div class="h5">
+          0
+        </div>
+      </button>
+      <button mat-raised-button type="button" (click)="key('**')" class="col w-100 mx-2" [disabled]="off">
+        <div class="h5">
+          X <sup>Y</sup>
+        </div>
+      </button>
+      <button mat-raised-button (click)="key('=')" class="col-5 w-100" type="submit" [disabled]="off">
+        <fa-icon [icon]="['fas', 'equals']"></fa-icon>
+      </button>
+    </div>
+  </form>
+  <!-- <p-toast position="bottom-center"></p-toast> -->
+  

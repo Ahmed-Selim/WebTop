@@ -1,0 +1,11 @@
+<section id="Desktop" class="p-1"
+  [ngStyle]="{
+    'background': wallpaper(),
+    'background-size': 'cover',
+    'font-family': fontFamily(),
+    'color': color()
+  }" 
+  [ngClass]="{'float-left': !ltr(), 'float-right': ltr()}"
+  cdkDrop>
+    <ng-template #stage></ng-template>
+</section>

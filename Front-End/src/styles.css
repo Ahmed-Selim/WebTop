@@ -1,0 +1,28 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css' ;
+
+html , body , .full {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+button:focus {
+    outline: none ;
+}
+
+mat-icon {
+    /* vertical-align: middle; */
+    font-weight: normal ;
+}
+
+p-t {
+    padding-top: 55px;
+}
+
+.hand {
+    cursor: pointer;
+}

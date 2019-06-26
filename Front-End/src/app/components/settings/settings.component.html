@@ -1,0 +1,128 @@
+<mat-sidenav-container (backdropClick)="sidenav.close()" class="h-100">
+  <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose mode="side" class="d-flex flex-row">
+    <mat-action-list>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 0">
+        <mat-icon matListIcon>language</mat-icon>
+        <h3 matLine> Core Settings </h3>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 1">
+        <mat-icon matListIcon>store</mat-icon>
+        <h3 matLine> App Store </h3>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.close()" (click)="tab = 2">
+        <mat-icon matListIcon>view_list</mat-icon>
+        <h3 matLine> Task Bar </h3>
+      </mat-list-item>
+    </mat-action-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="p-1">
+    <nav class="navbar sticky-top navbar-light bg-light">
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="ml-auto">
+        <fa-icon [icon]="[Tabs[tab].icon[0],Tabs[tab].icon[1]]" style="font-size: x-large; padding: 5px;" class="border border-info rounded"></fa-icon>
+        <h2 class="d-inline-block px-2"> {{Tabs[tab].title}} </h2>
+      </div>
+    </nav>
+    <mat-divider class="py-1"></mat-divider>
+        <main [ngSwitch]="tab" class="container h-auto d-flex flex-column">
+          <div class="col card-body" *ngSwitchCase="0">   <!-- // Core -->
+            <mat-slide-toggle [(ngModel)]="preferences.animation" class="d-block mb-3">Enable Animation</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="preferences.sound" class="d-block mb-3">Enable Sound</mat-slide-toggle>
+            <!-- <mat-slide-toggle [(ngModel)]="preferences.fullScreen" class="d-block mb-3">Enable Full-Screen</mat-slide-toggle> -->
+            <mat-slide-toggle [(ngModel)]="preferences.direction" class="d-block mb-3">Direction: {{ preferences.direction ? 'Left' : 'Right' }}</mat-slide-toggle>
+            <div class="row justify-content-between">
+            <div class="mb-3"> Color : 
+              <p-colorPicker [(ngModel)]="preferences.color"></p-colorPicker>
+              <p-inputMask [(ngModel)]="preferences.color" mask="#******" characterPattern="[a-fA-F0-9]"></p-inputMask>
+            </div>
+            <div class="mb-3"> Wallpaper Color : 
+              <p-colorPicker [(ngModel)]="preferences.wallpaper"></p-colorPicker>
+              <p-inputMask [(ngModel)]="preferences.wallpaper" mask="#******" characterPattern="[a-fA-F0-9]"></p-inputMask>
+            </div>
+          </div>
+          <div class="row justify-content-around">
+            <mat-form-field class="">
+              <mat-label>Font</mat-label>
+              <mat-select [(value)]="preferences.fontFamily">
+                <mat-option *ngFor="let font of default.fontFamily" [value]="font" [style.font-family]="font">
+                  {{ font }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="">
+              <mat-label>Sound Track</mat-label>
+              <mat-select [(value)]="preferences.soundTrack">
+                <mat-option *ngFor="let track of default.soundTrack" [value]="track">
+                  {{ track }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-around">
+            <mat-form-field class="">
+              <mat-label>Language</mat-label>
+              <mat-select [(value)]="preferences.language">
+                <mat-option *ngFor="let lang of default.language" [value]="lang">
+                  {{ lang }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="">
+              <mat-label>Theme</mat-label>
+              <mat-select [(value)]="preferences.styleTheme">
+                <mat-option *ngFor="let theme of default.theme" [value]="theme">
+                  {{ theme }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          </div>
+          <div class="col" *ngSwitchCase="1">   <!-- // Appstore -->
+            <div class="row justify-content-around">
+              <mat-form-field class="">
+                <mat-label>Direction</mat-label>
+                <mat-select [(value)]="preferences.appStore.direction">
+                  <mat-option *ngFor="let dir of default.direction | keyvalue" [value]="dir.value">
+                    {{ dir.key }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="">
+                <mat-label>Font</mat-label>
+                <mat-select [(value)]="preferences.appStore.fontFamily">
+                  <mat-option *ngFor="let font of default.fontFamily" [value]="font" [style.font-family]="font">
+                    {{ font }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              </div>
+            <div class="row justify-content-around">
+              <div class="mb-3"> Background Color : 
+                <p-colorPicker [(ngModel)]="preferences.appStore.background"></p-colorPicker>
+                <p-inputMask [(ngModel)]="preferences.appStore.background" mask="#******" characterPattern="[a-fA-F0-9]"></p-inputMask>
+              </div>
+              <div class="mb-3"> Color : 
+                <p-colorPicker [(ngModel)]="preferences.appStore.color"></p-colorPicker>
+                <p-inputMask [(ngModel)]="preferences.appStore.color" mask="#******" characterPattern="[a-fA-F0-9]"></p-inputMask>
+              </div>
+            </div>
+            <div class="row justify-content-around">
+              <mat-form-field class="">
+                <mat-label>Size</mat-label>
+                <mat-select [(value)]="preferences.appStore.width">
+                  <mat-option *ngFor="let size of [2,3,4,5,6,7,8,9,10,11]" value="col-{{size}}" >
+                    {{ size }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col" *ngSwitchCase="2">   <!-- // sidebar -->
+            </div>
+          <button mat-raised-button (click)="update()" (click)="log()">Save</button>
+        </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

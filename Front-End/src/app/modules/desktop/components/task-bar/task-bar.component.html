@@ -1,0 +1,26 @@
+<aside class="p-grid p-dir-col p-nogutter text-center text-white">
+   <div pTooltip="Apps" tooltipPosition="right" (click)="toggleStore()"
+  [ngClass]="{'p-col-fixed winTask bg-dark': true, 'hoverRight': !ltr(), 'hoverLeft': ltr()}">
+    <mat-icon>apps</mat-icon>
+  </div>
+  <ng-container *ngFor="let win of tasks | keyvalue">
+    <div pTooltip="{{win.value.appName}}" tooltipPosition="right" (click)="hide(win.key)"
+      [attr.data-id]="win.key" [ngClass]="{'p-col-fixed winTask': true, 'hoverRight': !ltr(), 'hoverLeft': ltr()}">
+      <mat-icon>
+        {{win.value.icon}}
+      </mat-icon>
+    </div>
+    <!-- {{ win.key }} {{ win.value }} -->
+  </ng-container>
+  <!-- <ng-container #entry></ng-container>
+
+  <ng-template #task>
+    <div pTooltip="{{win[1].appName}}" tooltipPosition="right" (click)="hide(win[0])"
+      [attr.data-id]="win[0]" [ngClass]="{'p-col-fixed winTask': true, 'hoverRight': !ltr(), 'hoverLeft': ltr()}">
+      <mat-icon>
+        {{win[1].icon}}
+      </mat-icon>
+    </div>
+  </ng-template> -->
+  
+</aside>
