@@ -39,4 +39,4 @@ Full documentation can be found here:
 
 ## Have a Question"?"
 
-If you have any question, contact me via my email: [Gmail](sci.ahmedselim@gmail.com)
+If you have any question, contact me via my email: sci.ahmedselim@gmail.com
